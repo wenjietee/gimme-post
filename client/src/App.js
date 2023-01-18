@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { useState } from "react";
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [postPrompt, setPostprompt] = useState("");
+
+    const handleSubmit = (e) => {
+        alert("A name was submitted: " + postPrompt);
+        e.preventDefault();
+    };
+
+    const handleChange = (e) => {
+        setPostprompt(e.target.value);
+    };
+
+    return (
+        <div className="App">
+            <div>
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        Prompt:
+                        <input
+                            type="text"
+                            value={postPrompt}
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
+            <div>
+                <div>Image here</div>
+                <div>Caption here</div>
+                <div>Hashtags here</div>
+            </div>
+        </div>
+    );
 }
 
 export default App;

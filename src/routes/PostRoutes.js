@@ -34,6 +34,7 @@ router.post("/create", async (req, res) => {
 
     if (openAiImageRes.error) {
         res.status(500).send(error.message);
+        return;
     }
 
     // // OPEN AI TEXT
@@ -56,9 +57,9 @@ router.post("/create", async (req, res) => {
 
     if (openAiTextRes.error) {
         res.status(500).send(error.message);
+        return;
     }
 
-    // res.status(200).send("ok");
     res.status(200).send({
         image: openAiImageRes.data,
         text: openAiTextRes.data,
