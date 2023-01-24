@@ -37,7 +37,7 @@ router.post("/create", async (req, res) => {
         return;
     }
 
-    // // OPEN AI TEXT
+    // OPEN AI HASHTAG
     const openAiTextConfig = {
         url: process.env.OPENAI_TEXT_URL,
         body: {
@@ -47,7 +47,7 @@ router.post("/create", async (req, res) => {
         },
     };
 
-    const openAiTextRes = await axios.post(
+    const openAiHastagsRes = await axios.post(
         openAiTextConfig.url,
         openAiTextConfig.body,
         {
@@ -55,14 +55,30 @@ router.post("/create", async (req, res) => {
         }
     );
 
-    if (openAiTextRes.error) {
+    if (openAiHastagsRes.error) {
         res.status(500).send(error.message);
         return;
     }
 
+    // OPEN AI CAPTIONS
+    openAiTextConfig.body.prompt = `Caption this image: ${openAiImageRes.data.data[0].url}`;
+
+    const openAiCaptionsRes = await axios.post(
+        openAiTextConfig.url,
+        openAiTextConfig.body,
+        {
+            headers: openAiHeaders,
+        }
+    );
+
+    if (openAiCaptionsRes.error) {
+        res.status(500).send(error.message);
+        return;
+    }
     res.status(200).send({
         image: openAiImageRes.data,
-        text: openAiTextRes.data,
+        hashtags: openAiHastagsRes.data,
+        captions: openAiCaptionsRes.data,
     });
 });
 
