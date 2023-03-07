@@ -3,6 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { Button, TextField, Box, Typography } from "@mui/material";
 import PropagateLoader from "react-spinners/PropagateLoader";
+require("dotenv").config();
+
 function App() {
     const [postPrompt, setPostprompt] = useState("");
     const [apiData, setApiData] = useState({});
@@ -12,7 +14,7 @@ function App() {
         e.preventDefault();
         setIsGenerated(false);
         const config = {
-            url: "http://127.0.0.1:3000/create",
+            url: process.env.APP_SEVER,
             body: { prompt: postPrompt },
         };
         const headers = {
