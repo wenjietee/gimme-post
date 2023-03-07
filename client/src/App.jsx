@@ -1,9 +1,8 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, TextField, Box, Typography } from "@mui/material";
 import PropagateLoader from "react-spinners/PropagateLoader";
-require("dotenv").config();
 
 function App() {
     const [postPrompt, setPostprompt] = useState("");
@@ -14,13 +13,13 @@ function App() {
         e.preventDefault();
         setIsGenerated(false);
         const config = {
-            url: process.env.APP_SEVER,
+            url: `${import.meta.env.VITE_APP_SERVER}/create`,
             body: { prompt: postPrompt },
         };
         const headers = {
             "Content-Type": "application/json",
         };
-
+        
         try {
             const { status, data } = await axios.post(config.url, config.body, {
                 headers,
